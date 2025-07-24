@@ -1,0 +1,39 @@
+{
+  "name": "node-sea-template-express-ts-esbuild",
+  "version": "1.0.0",
+  "description": "A template for creating Single Executable Applications (SEA) for Node.js Express.js servers, using TypeScript and esbuild, with Docker for cross-platform builds.",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "node --watch .",
+    "clean": "rimraf dist",
+    "build:ts": "npm run clean && esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
+    "build:sea": "npm run build:ts && node scripts/build-sea.js",
+    "build:docker": "docker build -t node-sea-app .",
+    "build:docker:arm64": "docker build --platform linux/arm64 -t node-sea-app-arm64 .",
+    "build:docker:amd64": "docker build --platform linux/amd64 -t node-sea-app-amd64 .",
+    "extract:sea:arm64": "node scripts/extract-sea.js node-sea-app-arm64 linux-arm64",
+    "extract:sea:amd64": "node scripts/extract-sea.js node-sea-app-amd64 linux-amd64"
+  },
+  "keywords": [
+    "node",
+    "sea",
+    "single-executable-application",
+    "express",
+    "typescript",
+    "esbuild",
+    "docker"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.17.19",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  }
+}
